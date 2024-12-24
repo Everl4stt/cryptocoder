@@ -26,8 +26,10 @@ def handle_encrypt(entry_file):
     if file_path:
         try:
             data = read_file(file_path)
+            print(data)
             encrypted_data = encrypt(data)
-            write_file(file_path + '.enc', encrypted_data)
+            normal_string = ''.join(chr(int(encrypted_data[i:i + 8], 2)) for i in range(0, len(encrypted_data), 8))
+            write_file(file_path + '.enc', normal_string)
             messagebox.showinfo("Успешно!", f"Файл {file_path} успешно зашифрован в {file_path + '.enc'}!")
         except Exception as e:
             messagebox.showerror("Ошибка", f"В процессе шифрования возникла ошибка: {e}")
@@ -40,6 +42,7 @@ def handle_decrypt(entry_file):
             return
         try:
             data = read_file(file_path)
+            print(data)
             decrypted_data = decrypt(data)
             write_file(file_path[:-4], decrypted_data)
             messagebox.showinfo("Успешно!", f"Файл {file_path} успешно расшифрован в {file_path[:-4]}!")
